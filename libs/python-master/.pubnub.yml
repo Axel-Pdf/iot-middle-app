@@ -1,0 +1,244 @@
+name: python
+version: 4.1.6
+schema: 1
+scm: github.com/pubnub/python
+changelog:
+  - version: v4.1.6
+    date: Aug 24, 2019
+    changes:
+      - type: improvement
+        text: implement Objects API
+  - version: v4.1.5
+    date: Aug 9, 2019
+    changes:
+      - type: improvement
+        text: implement Signal
+  - version: v4.1.4
+    date: Apr 10, 2019
+    changes:
+      - type: improvement
+        text: implement Fire
+  - version: v4.1.3
+    date: Feb 25, 2019
+    changes:
+      - type: improvement
+        text: implement history Message Counts
+  - version: v4.1.2
+    date: Sep 20, 2018
+    changes:
+      - type: improvement
+        text: Rename await to pn_await
+  - version: v4.1.1
+    date: Sep 11, 2018
+    changes:
+      - type: improvement
+        text: Rename async to pn_async
+  - version: v4.1.0
+    date: Jan 18, 2018
+    changes:
+      - type: improvement
+        text: Add history delete
+      - type: improvement
+        text: Add telemetry manager
+      - type: bug
+        text: Fix linter warnings
+      - type: bug
+        text: Fix plugins versions and remove unused plugins
+  - version: v4.0.13
+    date: Jun 14, 2017
+    changes:
+      - type: improvement
+        text: Added deamon option for PNConfig
+  - version: v4.0.12
+    date:
+    changes:
+      - type: bug
+        text: Fixed issues with managing push notifications
+  - version: v4.0.11
+    date: May 22, 2017
+    changes:
+      - type: bug
+        text: Fix typo on announce_status.
+  - version: v4.0.10
+    date: Mar 23, 2017
+    changes:
+      - type: bug
+        text: Fix aiohttp v1.x.x and v2.x.x compatibility
+  - version: v4.0.9
+    date: Mar 10, 2017
+    changes:
+      - type: bug
+        text: Fix missing encoder for path elements
+      - type: feature
+  - version: v4.0.8
+    date: Feb 17, 2017
+    changes:
+      - type: feature
+        text: Support log_verbosity in pnconfiguration to enable HTTP logging.
+  - version: v4.0.7
+    date: Feb 5, 2017
+    changes:
+      - type: bug
+        text: Handle interval presence messages gracefully if they do not contain a UUID.
+      - type: feature
+        text: Support custom cryptography module when using GAE
+      - type: improvement
+        text: designate the request thread as non-daemon to keep the SDK running.
+  - version: v4.0.6
+    date: Jan 21, 2017
+    changes:
+      - type: bug
+        text: Fix on state object type definition.
+  - version: v4.0.5
+    date: Jan 4, 2017
+    changes:
+      - type: improvement
+        text: new pubnub domain
+      - type: improvement
+        text: native demo app
+      - type: improvement
+        text: fixed HTTPAdapter config
+      - type: improvement
+        text: add a new Python 3.6.0 config to travis builds
+      - type: improvement
+        text: fix blocking Ctrl+C bug
+  - version: v4.0.4
+    date: Dec 21, 2016
+    changes:
+      - type: improvement
+        text: Add reconnection managers
+  - version: v4.0.3
+    date:
+    changes:
+      - type: improvement
+        text: do not strip plus sign when encoding message.
+  - version: v4.0.2
+    date: Nov 14, 2016
+    changes:
+      - type: improvement
+        text: Adjusting maximum pool size for requests installations
+      - type: improvement
+        text: Adding Publsher UUID
+  - version: v4.0.1
+    date: Nov 8, 2016
+    changes:
+      - type: improvement
+        text: Fixing up packaging configuration for py3
+  - version: v4.0.0
+    date: Nov 2, 2016
+    changes:
+      - type: improvement
+        text: Initial Release
+features:
+  access:
+    - ACCESS-GRANT
+    - ACCESS-SECRET-KEY-ALL-ACCESS    
+  channel-groups:
+    - CHANNEL-GROUPS-ADD-CHANNELS
+    - CHANNEL-GROUPS-REMOVE-CHANNELS
+    - CHANNEL-GROUPS-REMOVE-GROUPS
+    - CHANNEL-GROUPS-LIST-CHANNELS-IN-GROUP
+  push:
+    - PUSH-ADD-DEVICE-TO-CHANNELS
+    - PUSH-REMOVE-DEVICE-FROM-CHANNELS
+    - PUSH-LIST-CHANNELS-FROM-DEVICE
+    - PUSH-REMOVE-DEVICE
+  presence:
+    - PRESENCE-HERE-NOW
+    - PRESENCE-WHERE-NOW
+    - PRESENCE-SET-STATE
+    - PRESENCE-GET-STATE
+    - PRESENCE-HEARTBEAT
+  publish:
+    - PUBLISH-STORE-FLAG
+    - PUBLISH-RAW-JSON
+    - PUBLISH-WITH-METADATA
+    - PUBLISH-GET
+    - PUBLISH-ASYNC
+    - PUBLISH-FIRE
+  storage:
+    - STORAGE-REVERSE
+    - STORAGE-INCLUDE-TIMETOKEN
+    - STORAGE-START-END
+    - STORAGE-COUNT
+    - STORAGE-MESSAGE-COUNT
+  time:
+    - TIME-TIME
+  subscribe:
+    - SUBSCRIBE-CHANNELS
+    - SUBSCRIBE-CHANNEL-GROUPS
+    - SUBSCRIBE-PRESENCE-CHANNELS
+    - SUBSCRIBE-PRESENCE-CHANNELS-GROUPS
+    - SUBSCRIBE-WITH-TIMETOKEN
+    - SUBSCRIBE-WILDCARD
+    - SUBSCRIBE-PUBLISHER-UUID
+    - SUBSCRIBE-SIGNAL-LISTENER
+    - SUBSCRIBE-USER-LISTENER
+    - SUBSCRIBE-SPACE-LISTENER
+    - SUBSCRIBE-MEMBERSHIP-LISTENER
+  signal:
+    - SIGNAL-SEND
+  objects:
+    - OBJECTS-GET-USER
+    - OBJECTS-GET-USERS
+    - OBJECTS-CREATE-USER
+    - OBJECTS-UPDATE-USER
+    - OBJECTS-DELETE-USER
+    - OBJECTS-GET-SPACE
+    - OBJECTS-GET-SPACES
+    - OBJECTS-CREATE-SPACE
+    - OBJECTS-UPDATE-SPACE
+    - OBJECTS-DELETE-SPACE
+    - OBJECTS-GET-MEMBERSHIPS
+    - OBJECTS-JOIN-SPACES
+    - OBJECTS-UPDATE-MEMBERSHIPS
+    - OBJECTS-LEAVE-SPACES
+    - OBJECTS-GET-MEMBERS
+    - OBJECTS-ADD-MEMBERS
+    - OBJECTS-UPDATE-MEMBERS
+    - OBJECTS-REMOVE-MEMBERS
+
+supported-platforms:
+  -
+    version: PubNub Python SDK
+    platforms:
+      - FreeBSD 8-STABLE or later, amd64, 386
+      - Linux 2.6 or later, amd64, 386.
+      - Mac OS X 10.8 or later, amd64
+      - Windows 7 or later, amd64, 386
+    editors:
+      - python 2.7.13
+      - python 3.4.5
+      - python 3.5.2
+      - python 3.6.0
+      - pypy
+  -
+    version: PubNub Python Tornado SDK
+    platforms:
+      - FreeBSD 8-STABLE or later, amd64, 386
+      - Linux 2.6 or later, amd64, 386.
+      - Mac OS X 10.8 or later, amd64
+      - Windows 7 or later, amd64, 386
+    editors:
+      - python 2.7.13
+      - python 3.4.5
+      - python 3.5.2
+      - python 3.6.0
+      - pypy
+  -
+    version: PubNub Python Asyncio SDK
+    platforms:
+      - FreeBSD 8-STABLE or later, amd64, 386
+      - Linux 2.6 or later, amd64, 386.
+      - Mac OS X 10.8 or later, amd64
+      - Windows 7 or later, amd64, 386
+    editors:
+      - python 3.4.5
+      - python 3.5.2
+      - python 3.6.0
+  -
+    version: PubNub Python Twisted SDK
+    platforms:
+      - Linux 2.6 or later, amd64, 386.
+    editors:
+      - python 2.7.13

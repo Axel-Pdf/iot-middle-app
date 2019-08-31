@@ -1,0 +1,20 @@
+Middleware básico para utilização em soluções IoT utilizando Python
+
+API utilizado: Pubnub (https://www.pubnub.com/docs/python/pubnub-python-sdk)
+
+
+Arquitetura da API Pubnub utiliza um esquema de publicação/assinatura de mensagens entre dispositivos conectados
+
+    - Dispositivos são conectados a canais, efetuando "publicações" e 
+        "assinaturas", ou seja, transmitindo e lendo fluxo de dados em um mesmo espaço;
+    
+    - Ao se inscrever em um dado canal, dispositivos recebem todo o fluxo desse
+         canal, de todos os dispositivos envolvidos, devendo tratar da 
+         utilizacao/armazenamento/descarte dessas;
+         
+    - API trata de todos os eventos de conexão/desconexão/erros;
+    
+    - Mensagens são transmitidas em JSON, devendo se limitar a, 
+        preferencialmente, 1.5~2.0KB;
+    
+    
