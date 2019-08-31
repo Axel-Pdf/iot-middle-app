@@ -11,30 +11,42 @@ Funções de Subscribe e Publish
 from pubnub.callbacks import SubscribeCallback
 from pubnub.enums import PNStatusCategory, PNOperationType
 from pubnub.pnconfiguration import PNConfiguration
-from pubnub.pubnub import PubNub
+from pubnub.pubnub import PubNub, SubscribeListener
 from pubnub.exceptions import PubNubException
 
 
-pnconfig = PNConfiguration()
-
-pnconfig.subscribe_key = 'uma_chave'
-pnconfig.publish_key = 'outra_chave'
-pnconfig.ssl = False
-
-pubnub = PubNub(pnconfig)
-
-
-def chamada_publicacao(envelope, status):
-    #Confere se pedido foi completado
+class InicializadorPubnub(PubNub):
+    chave_inscricao = "chave_para_incricao"
+    chave_publicacao = "chave_para_publicacao"
+    uuid = 'identificador_dispositivo'
     
-    if not status.is_error():
-        pass #Mensagem publicada
-    else:
-        pass
-        #mensagem falhou publicacao
-        #pedido falhou
-        #pode ser repetida com [status retry]
-        #tratar erros aqui
+    def __init__(self, chave_inscricao, chave_publicacao, uuid = ''):
+        self.chave_inscricao = chave_inscricao
+        self.chave_publicacao = chave_publicacao
+        self.uuid = uuid
+        
+    def inicializador(self, ssl = False):
+        pnconfig = PNConfiguration()
+        pnconfig.subscribe_key = self.chave_inscricao
+        pnconfig.publish_key = self.chave_inscricao
+        pnconfig.ssl = ssl
+        
+        pubnub = PubNub(pnconfig)
+        
+        return pubnub
+    
+    def chamada_publicacao(envelope, status):
+        #Confere se pedido foi completado
+        
+        if not status.is_error():
+            pass 
+            #Mensagem publicada
+        else:
+            pass
+            #mensagem falhou publicacao
+            #pedido falhou
+            #pode ser repetida com [status retry]
+            #tratar erros aqui
         
         
 class ChamadaDeAssinatura(SubscribeCallback):
@@ -100,7 +112,7 @@ class ChamadaTrataDisconexao(SubscribeCallback):
             
             pubnub.reconect()
         else:
-            logger.debug(status)
+            pubnub.logger.debug(status)
             
     def presence(self, pubnub, presence):
         pass
@@ -110,10 +122,59 @@ class ChamadaTrataDisconexao(SubscribeCallback):
  
     def signal(self, pubnub, signal):
         pass
+
+        
+class Ouvinte(SubscribeCallback):
+    
+   def status(self, pubnub, status):
+        if status.category == PNStatusCategory.PNConnectedCategory:
+            pubnub.publish().channel("").message({}).sync()
+ 
+   def message(self, pubnub, message):
+       pass
+ 
+   def presence(self, pubnub, presence):
+       pass
    
-
-
-
+     
+class Publicador(SubscribeCallback):
+    
+    def publica_mensagem(canal, mensagem, pubnub):
+        
+        try:
+            envelope = pubnub.publish().channel(canal).message(mensagem).sync()
+            print("Timetoken de publicação: %d", envelope.result.timetoken)
+        except PubNubException as e:
+            # Tratar falhas na publicacao
+            #handle_exception(e)
+            print(e.status)
+   
+         
+class Assinante(SubscribeCallback):
+    
+    assinante = None
+    
+    def __init__(self, canal):
+        
+        self.assinante = Ouvinte()
+        
+    def adiciona_ouvinte(self, pubnub):
+        pubnub.add_listener(self.assinante)
+        
+    
+    def assina_canal(self, pubnub, canal):
+        
+        pubnub.subscribe().channels(canal).execute()
+        self.assinante.wait_for_connect()
+        print('Conectado')
+        
+    def remove_assinatura(self, pubnub, canal):
+        pubnub.unsubscribe().channels(canal).execute()
+        self.assinante.wait_for_disconnect()
+        print('Desconectado')
+        
+        
+      
 
 #pubnub.subscribe().channels('um_canal').execute()   #coloca o objeto para ouvir em um dado canal do pubnub
 
