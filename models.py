@@ -14,7 +14,6 @@ from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub, SubscribeListener
 from pubnub.exceptions import PubNubException
 
-
 class InicializadorPubnub(PubNub):
     chave_inscricao = "chave_para_incricao"
     chave_publicacao = "chave_para_publicacao"
@@ -142,12 +141,18 @@ class Publicador(SubscribeCallback):
     def publica_mensagem(canal, mensagem, pubnub):
         
         try:
-            envelope = pubnub.publish().channel(canal).message(mensagem).sync()
+            envelope = pubnub.publish().channel(canal).message(mensagem).should_store(True).sync()
             print("Timetoken de publicação: %d", envelope.result.timetoken)
         except PubNubException as e:
             # Tratar falhas na publicacao
             #handle_exception(e)
             print(e.status)
+            
+    def resgata_registro(pubnub, canal, num_registros):
+        
+        dados = pubnub.history().channel(canal).count(num_registros).sync()
+        
+        return dados
    
          
 class Assinante(SubscribeCallback):
@@ -173,21 +178,26 @@ class Assinante(SubscribeCallback):
         self.assinante.wait_for_disconnect()
         print('Desconectado')
         
+class Registrador():
+    from firebase import firebase
+    import firebase_admin
+    from firebase_admin import credentials
+    from firebase_admin import firestore
+    import datetime
+    
+   
+    
+          
+    def registra_fluxo(self, canal, dados):
         
-      
-
-#pubnub.subscribe().channels('um_canal').execute()   #coloca o objeto para ouvir em um dado canal do pubnub
-
-
-##adicionar / remover ouvintes
-#
-#ouvinte = ChamadaDeAssinatura()
-#
-#pubnub.add_listener(ouvinte)
-#
-##depois de um tempo
-#pubnub.remove_listener(ouvinte)
-
-##Adicionando ouvinte tratador de erros
-#ouvinte_erros = ChamadaTrataDisconexao()
-#pubnub.add_listener(ouvinte_erros)
+        base = self.firebase.FirebaseApplication('https://iot-middle-app.firebaseio.com/') 
+        base_nome = 'iot-middle-app/' + canal
+              
+        for i in range(dados.length):          
+            base.post(str(base_nome), dados[i])
+            
+            
+    
+    
+    
+    

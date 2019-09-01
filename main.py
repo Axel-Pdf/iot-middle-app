@@ -1,4 +1,5 @@
-from models import InicializadorPubnub, ChamadaDeAssinatura, ChamadaTrataDisconexao, Publicador, Assinante
+from models import InicializadorPubnub, ChamadaDeAssinatura, ChamadaTrataDisconexao,\
+ Publicador, Assinante, Registrador
 import time
 import datetime
 
@@ -36,12 +37,26 @@ def iniciarMiddle(chave_sub, chave_pub):
             mensagem = input("Insira a mensagem a ser publicada aos dispositivos: ")
             try:
                 publicador.publica_mensagem(canal, mensagem, pubnub)
-                print("Mensagem publicada")
+                print("Mensagem", mensagem, " publicada em", str(datetime.datetime))
             except:
                 print("Falha ao enviar mensagem a dispositivos")
         
         elif opcao == 3:
-            pass
+            
+            canal_ref = input("Insira o canal de que quer obter registros: ")
+            num_registros = int(input("Insira o número de registros que deseja obter: "))
+            
+            try:
+                registros_obtidos = publicador.resgata_registro(pubnub, canal_ref, num_registros)
+                try:
+                    registra = Registrador()
+                    registra.registra_dados(canal_ref, registros_obtidos)
+                except:
+                    print("Falha ao registrar dados em base")
+                print("Registros obtidos do canal", canal, "registrados em base de dados")
+                print(registros_obtidos)
+            except:
+                print("Falha ao obter registros")
         
         elif opcao == 4:
             canal = input("Desconectar de que canal? ")
