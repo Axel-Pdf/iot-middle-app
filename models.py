@@ -170,23 +170,23 @@ class Assinante(SubscribeCallback):
     def assina_canal(self, pubnub, canal):
         
         pubnub.subscribe().channels(canal).execute()
-        self.assinante.wait_for_connect()
+        #self.assinante.wait_for_connect()
         print('Conectado')
         
     def remove_assinatura(self, pubnub, canal):
         pubnub.unsubscribe().channels(canal).execute()
-        self.assinante.wait_for_disconnect()
+        #self.assinante.wait_for_disconnect()
         print('Desconectado')
         
 class Registrador():
-    from firebase import firebase
-    import firebase_admin
-    from firebase_admin import credentials
-    from firebase_admin import firestore
+    import firebase
+#    import firebase_admin
+#    from firebase_admin import credentials
+#    from firebase_admin import firestore
     import datetime
     
    
-    
+  
           
     def registra_fluxo(self, canal, dados):
         

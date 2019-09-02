@@ -9,22 +9,25 @@ import datetime
 def iniciarMiddle(chave_sub, chave_pub):
     
     pubnub = InicializadorPubnub(chave_sub, chave_pub).inicializador()
-    monitor = Assinante()
-    publicador = Publicador()
+    monitor = None
+    publicador = None
+    registra = None
     
     print("API Inicializada. Não conectado a nenhum canal no momento")
     time.sleep(2)
     while True:
-        opcao = int(input("Para efetuar operacões, digite um dos comandos numericos: ", 
-                          "1 - Monitorar fluxo de dados;", 
-                          "2 - Publicar mensagem para dispositivos;", 
-                          "3 - Obter log de comunicação", 
-                          "4 - Desconectar"
-                          "5 - Encerrar"))
+        opcao = int(input("""Para efetuar operacões, digite um dos comandos numericos:  
+                          1 - Monitorar fluxo de dados; 
+                          2 - Publicar mensagem para dispositivos; 
+                          3 - Obter log de comunicação 
+                          4 - Desconectar
+                          5 - Encerrar
+                          : """))
         
         if opcao == 1:
             canal = input("Insira o canal que deseja monitorar: ")
             try:
+                monitor = Assinante(canal)
                 monitor.assina_canal(pubnub, canal)
                 print("Monitorando canal de comunicacao:", canal)
             
@@ -36,6 +39,7 @@ def iniciarMiddle(chave_sub, chave_pub):
             time.sleep(0.5)
             mensagem = input("Insira a mensagem a ser publicada aos dispositivos: ")
             try:
+                publicador = Publicador(canal)
                 publicador.publica_mensagem(canal, mensagem, pubnub)
                 print("Mensagem", mensagem, " publicada em", str(datetime.datetime))
             except:
@@ -75,3 +79,5 @@ def iniciarMiddle(chave_sub, chave_pub):
             break
         else:
             print("Opção inválida")
+            
+        

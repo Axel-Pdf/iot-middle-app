@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Board Controller</title>
+</head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
+	<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.20.2.min.js"></script>
+
+	<!-- Instantiate PubNub -->
+	<script type="text/javascript">
+
+	    var pubnub = new PubNub({
+	        publishKey: 'pub-c-3d596091-11f9-4424-9796-7a67018f578d',
+	        subscribeKey: 'sub-c-c52c96a4-3f6c-11e9-978c-aae2bd4c3b77'
+	    });
+
+	</script>
+
+
+	<script charset="utf-8">
+	
+	
+			function lowMove(){
+				pubnub.publish(
+				 {
+					message: {
+						status: 'LOW'
+					},
+					channel: 'servo_channel',
+					sendByPost: false, // true to send via post
+					storeInHistory: false, //override default storage options
+					meta: {
+						"cool": "meta"
+					}   // publish extra meta with the request
+				},
+				function (status, response) {
+					if (status.error) {
+						// handle error
+						console.log(status)
+					} else {
+						console.log("message Published w/ timetoken")
+					}
+				}
+			  );
+
+			}
+			
+			function midMove(){
+				pubnub.publish(
+				 {
+					message: {
+						status: 'MID'
+					},
+					channel: 'canal_teste',
+					sendByPost: false, // true to send via post
+					storeInHistory: false, //override default storage options
+					meta: {
+						"cool": "meta"
+					}   // publish extra meta with the request
+				},
+				function (status, response) {
+					if (status.error) {
+						// handle error
+						console.log(status)
+					} else {
+						console.log("message Published w/ timetoken")
+					}
+				}
+			  );
+			}
+			
+			
+			
+			function hiMove(){
+				pubnub.publish(
+				 {
+					message: {
+						status: 'HIGH'
+					},
+					channel: 'canal_teste',
+					sendByPost: false, // true to send via post
+					storeInHistory: false, //override default storage options
+					meta: {
+						"cool": "meta"
+					}   // publish extra meta with the request
+				},
+				function (status, response) {
+					if (status.error) {
+						// handle error
+						console.log(status)
+					} else {
+						console.log("message Published w/ timetoken")
+					}
+				}
+			  );
+			}
+			
+			
+			
+			function closeAll(){
+				pubnub.publish(
+				 {
+					message: {
+						status: 'CLOSE'
+					},
+					channel: 'canal_teste',
+					sendByPost: false, // true to send via post
+					storeInHistory: false, //override default storage options
+					meta: {
+						"cool": "meta"
+					}   // publish extra meta with the request
+				},
+				function (status, response) {
+					if (status.error) {
+						// handle error
+						console.log(status)
+					} else {
+						console.log("message Published w/ timetoken")
+					}
+				}
+			  );
+
+			}
+			
+			
+	</script>			
+
+
+<body>
+	<div>
+		<h1>Controlado Provisório de Rpi</h1>
+		<div>
+			<h2>Clique um Botão para Mover o Dispositivo Pré-programado para uma Posição!</h2>
+		<button type="button" onClick="lowMove()" class="on">Low Position</button>
+		<button type="button" onClick="midMove()" class="off">Mid Position</button>
+		<button type="button" onClick="hiMove()" class="off">High Position</button>
+		<button type="button" onClick="closeAll()" class="off">Close All</button>
+		</div>
+	</div>
+
+</body>
+</html>
