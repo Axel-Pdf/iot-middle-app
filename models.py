@@ -27,7 +27,7 @@ class InicializadorPubnub(PubNub):
     def inicializador(self, ssl = False):
         pnconfig = PNConfiguration()
         pnconfig.subscribe_key = self.chave_inscricao
-        pnconfig.publish_key = self.chave_inscricao
+        pnconfig.publish_key = self.chave_publicacao
         pnconfig.ssl = ssl
         
         pubnub = PubNub(pnconfig)
@@ -46,6 +46,12 @@ class InicializadorPubnub(PubNub):
             #pedido falhou
             #pode ser repetida com [status retry]
             #tratar erros aqui
+            
+def subscribe_callback(envelope, status):
+    if not status.is_error():
+        pass
+    else:
+        pass
         
         
 class ChamadaDeAssinatura(SubscribeCallback):
@@ -138,20 +144,22 @@ class Ouvinte(SubscribeCallback):
      
 class Publicador(SubscribeCallback):
     
-    def publica_mensagem(canal, mensagem, pubnub):
+   
+    def publica_mensagem(self, pubnub, canal, mensagem):
+        
         
         try:
-            envelope = pubnub.publish().channel(canal).message(mensagem).should_store(True).sync()
-            print("Timetoken de publicação: %d", envelope.result.timetoken)
+            pubnub.publish().channel(canal).message(mensagem).pn_async(subscribe_callback)
+            #print("Timetoken de publicação: %d", envelope.result.timetoken)
         except PubNubException as e:
             # Tratar falhas na publicacao
             #handle_exception(e)
             print(e.status)
             
-    def resgata_registro(pubnub, canal, num_registros):
+    def resgata_registro(self, pubnub, canal, num_registros):
         
         dados = pubnub.history().channel(canal).count(num_registros).sync()
-        
+        print(type(dados))
         return dados
    
          
@@ -196,8 +204,23 @@ class Registrador():
         for i in range(dados.length):          
             base.post(str(base_nome), dados[i])
             
-            
-    
-    
-    
-    
+
+
+
+#pnconfig = PNConfiguration()
+#pnconfig.subscribe_key = 'sub-c-c52c96a4-3f6c-11e9-978c-aae2bd4c3b77'
+#pnconfig.publish_key = 'pub-c-3d596091-11f9-4424-9796-7a67018f578d'
+#
+#        
+#pubnub = PubNub(pnconfig)            
+#    
+#
+#envelope = pubnub.history().channel('canal_teste').count(3).sync()
+#for item in envelope:
+#    print(item)
+
+#
+##    
+#publicador = Publicador()
+#envelope = publicador.resgata_registro(pubnub, 'canal_teste', 3)    
+#print(type(envelope))    
