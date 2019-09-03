@@ -50,11 +50,11 @@ def iniciarMiddle(chave_sub, chave_pub):
             
             canal_ref = str(input("Insira o canal de que quer obter registros: "))
             num_registros = int(input("Insira o número de registros que deseja obter: "))
-            publicador = Publicador()
-            registros_obtidos = publicador.resgata_registro(pubnub, canal_ref, num_registros)
-            print(registros_obtidos)
+            
             try:
-               
+                publicador = Publicador()
+                registros_obtidos = publicador.resgata_registro(pubnub, canal_ref, num_registros)
+                registros_obtidos = registros_obtidos[1]
                 try:
                     registra = Registrador()
                     registra.registra_dados(canal_ref, registros_obtidos)
