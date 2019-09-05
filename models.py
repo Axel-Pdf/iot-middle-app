@@ -158,9 +158,17 @@ class Publicador(SubscribeCallback):
             
     def resgata_registro(self, pubnub, canal, num_registros):
         
-        dados = pubnub.history().channel(canal).count(num_registros).sync()
-        print(type(dados))
-        return dados
+        resposta = []
+        
+        envelope = pubnub.history().channel(canal).count(num_registros).sync()
+        dados = envelope.result.messages
+        for item in dados:
+            item = str(item)
+            item = item[39:]
+            
+            resposta.append(item)
+            
+        return resposta
    
          
 class Assinante(SubscribeCallback):
@@ -198,26 +206,36 @@ class Registrador():
           
     def registra_fluxo(self, canal, dados):
         
-        base = self.firebase.FirebaseApplication('https://iot-middle-app.firebaseio.com/') 
+        base = self.firebase.firebase.FirebaseApplication('https://iot-middle-app.firebaseio.com/') 
         base_nome = 'iot-middle-app/' + canal
               
-        for i in range(dados.length):          
-            base.post(str(base_nome), dados[i])
+        for item in dados:          
+            base.post(base_nome, item)
             
 
 
-
+#
 #pnconfig = PNConfiguration()
 #pnconfig.subscribe_key = 'sub-c-c52c96a4-3f6c-11e9-978c-aae2bd4c3b77'
 #pnconfig.publish_key = 'pub-c-3d596091-11f9-4424-9796-7a67018f578d'
 #
 #        
 #pubnub = PubNub(pnconfig)            
-#    
+##    
+##
+#envelope = pubnub.history().channel('canal_teste').count(5).sync()
+#value = envelope.result.messages.__str__
 #
-#envelope = pubnub.history().channel('canal_teste').count(3).sync()
-#for item in envelope:
+#print(value)
+#
+#for item in value:
+#    item = str(item)
+#    item = item[39:]
 #    print(item)
+#    
+
+
+
 
 #
 ##    
