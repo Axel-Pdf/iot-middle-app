@@ -2,6 +2,11 @@ Middleware básico para utilização em soluções IoT utilizando Python
 
 API utilizado: Pubnub (https://www.pubnub.com/docs/python/pubnub-python-sdk)
 
+Bibliotecas utilizadas (instalar via pip):
+
+  Firebase - pip install python-firebase
+  Pubnub - pip install 'pubnub>=4.1.6'
+
 
 Arquitetura da API Pubnub utiliza um esquema de publicação/assinatura de mensagens entre dispositivos conectados
 
