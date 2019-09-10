@@ -106,8 +106,11 @@ class Console:
                             self.publicador = Publicador()                            
                         registros_obtidos = self.publicador.resgata_registro(self.pubnub, canal, num_registros)
                         try:
-                            self.registra = Registrador()
-                            self.registra.registra_fluxo(canal, registros_obtidos)
+                            bdp = str.lower(input("Deseja salvar log obtido em banco de dados? <s/n>"))
+                            if bdp == 's':
+                                self.registra = Registrador()
+                                self.registra.registra_fluxo(canal, registros_obtidos)
+                                print("Log registrado em BD")
                             print(registros_obtidos)
                         except:
                             print("Falha ao registrar dados em base")

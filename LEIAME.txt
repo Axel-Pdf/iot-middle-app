@@ -51,3 +51,5 @@ https://dashboard.pubnub.com/signup
 ################################### OBSERVAÇÕES ###################################
 
 1 - Função de captura de stream não finalizada/testada
+
+2 - Por restrições da API, dados transmitidos apenas em string. Sujeito a mudanças
