@@ -13,6 +13,8 @@ from pubnub.enums import PNStatusCategory, PNOperationType
 from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub, SubscribeListener
 from pubnub.exceptions import PubNubException
+import time
+import cv2 as cv
 
 class InicializadorPubnub(PubNub):
     chave_inscricao = "chave_para_incricao"
@@ -141,6 +143,50 @@ class Ouvinte(SubscribeCallback):
    def presence(self, pubnub, presence):
        pass
    
+   def getStream(self, pubnub, canal):
+       print("Tecle 'p' para parar o stream")
+       time.sleep(1)
+       
+       resposta = []
+       k = True
+       key = ''
+       
+       while k == True:
+                              
+           key = cv.waitKey(100)
+           if key == 'p':
+               k = False
+               
+           envelope = pubnub.history().channel(canal).count(1).sync()
+           dados = envelope.result.messages
+           resposta.append(str(dados[39:]))
+           print(str(dados[39:]))
+           
+       sal = input("Desja salvar o stream em banco de dados? (s/n)")
+       if sal == 'y':
+           
+           
+           reg = Registrador()
+           
+           for item in resposta:
+               reg.registra_fluxo(canal, item)
+           
+#           import firebase
+#           import datetime
+#           
+#           base = self.firebase.firebase.FirebaseApplication('https://iot-middle-app.firebaseio.com/') 
+#           base_nome = 'iot-middle-app/' + canal
+#           
+#           for item in resposta:
+#               base.post(base_nome, item)
+               
+       elif sal == 'n':
+           pass
+       else:
+           print("Comando Inválido")
+           
+           
+           
      
 class Publicador(SubscribeCallback):
     

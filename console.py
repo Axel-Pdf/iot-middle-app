@@ -38,6 +38,7 @@ class Console:
                 '\tpublica_mensagem         - Publica mensagem em canal conectada (digitar: canal mensagem [máximo: 5 palavras])',
                 '\tobter_log                - Obtém log de comunicações de canal (digitar: canal num_registros)',
                 '\tdesconectar              - Desconecta de canal de comunicação (digitar: canal)',
+                '\stream                    - Captura o Stream de dados de um canal (digitar canal)',
                 '\tencerra                  - Encerra aplicativo'
             ]
 
@@ -120,6 +121,9 @@ class Console:
                     print('[Aviso] Verifique as aspas duplas')
             
             
+        elif comm.startswith('stream'):
+            pass
+        
         elif comm.startswith('desconectar'):
             try:
                 args = shlex.split(comm)
