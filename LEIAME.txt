@@ -36,11 +36,18 @@ https://dashboard.pubnub.com/signup
 2 - Ao logar em sua conta, acessar a aba chaves (Keys) e criar um novo set de chaves (Create New Keyset)
 		- criado o novo keyset, clicar neste e, na página de gerenciamento, ativar 'Storage & Playback'
 		
-3 - Copiar Publish Key & Subscribe Key da sessão de chaves e colar no arquivo init.py na 
-	inicialização de Console ('sub', 'pub') [primiero Subscribe depois Publish]
+3 - Copiar Publish Key & Subscribe Key da sessão de chaves e colar nos arquivos 
+    dispositivo.py (em md.InicializadorPubnub) e init.py  na inicialização de Console ('sub', 'pub') 
+    [primiero Subscribe depois Publish]
+    
+4 - Abrir janela de prompt e rodar dispositivo.py, inserindo o nome do canal criado na página do Pubnub
+    e o número de registros aleatórios a lançar
 	
-4 - Inicializar init.py
+5 - Inicializar init.py
 		Ao iniciar o console, digitar 'help' para instruções
 		
 		seguir lógica de prompt 'comando argumento'
 	
+################################### OBSERVAÇÕES ###################################
+
+1 - Função de captura de stream não finalizada/testada

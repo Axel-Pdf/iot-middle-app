@@ -15,6 +15,7 @@ from pubnub.pubnub import PubNub, SubscribeListener
 from pubnub.exceptions import PubNubException
 import time
 import cv2 as cv
+import sys
 
 class InicializadorPubnub(PubNub):
     chave_inscricao = "chave_para_incricao"
@@ -150,6 +151,7 @@ class Ouvinte(SubscribeCallback):
        resposta = []
        k = True
        key = ''
+
        
        while k == True:
                               
@@ -160,6 +162,8 @@ class Ouvinte(SubscribeCallback):
            envelope = pubnub.history().channel(canal).count(1).sync()
            dados = envelope.result.messages
            resposta.append(str(dados[39:]))
+           
+           
            print(str(dados[39:]))
            
        sal = input("Desja salvar o stream em banco de dados? (s/n)")
@@ -181,7 +185,7 @@ class Ouvinte(SubscribeCallback):
 #               base.post(base_nome, item)
                
        elif sal == 'n':
-           pass
+           print("Captura de stream finalizada...")
        else:
            print("Comando Inválido")
            
