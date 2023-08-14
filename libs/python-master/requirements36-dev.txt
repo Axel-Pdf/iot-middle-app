@@ -1,5 +1,5 @@
 pytest==4.3.0
 pytest-asyncio
-tornado==4.5.3
+tornado==6.3.3
 aiohttp==2.3.10
 pytest-cov
